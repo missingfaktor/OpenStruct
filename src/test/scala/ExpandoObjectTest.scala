@@ -6,13 +6,20 @@ class ExpandoObjectTest extends Specification {
       val e = new ExpandoObject
       locally {
         e.name = "foo"
-      } must not(throwA[Exception])
+      } must not(throwAn[Exception])
     }
 
     "retrieve inserted fields correctly" in {
       val e = new ExpandoObject
       e.name = "foo"
       e.name mustEqual "foo"
+    }
+
+    "throw a NoSuchElementException when the field being access is invalid" in {
+      val e = new ExpandoObject
+      locally {
+        e.bar 
+      } must throwA[NoSuchElementException]
     }
 
     "overwrite older field when a new field with same name is inserted" in {
