@@ -12,6 +12,8 @@ class ReflectTest extends Specification {
     private val privateField = 'prf
     def publicNullaryMethod = 'punm
     private def privateNullaryMethod = 'prnm
+
+    def pitz(x: Int, y: Int) = x + y + 2
   }
 
   "Reflect" should {
@@ -25,6 +27,12 @@ class ReflectTest extends Specification {
       val obj = new Foo
       val r = Reflect on obj
       r.invokeMethod("publicNullaryMethod") mustEqual 'punm
+    }
+
+    "apply a method with arity > 0" in {
+      val obj = new Foo
+      val r = Reflect on obj
+      r.invokeMethod("pitz", 3, 4) mustEqual 9
     }
 
     "not allow accessing a private field" in {

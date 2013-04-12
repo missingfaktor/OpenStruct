@@ -26,4 +26,8 @@ class OpenStructWithUnderlyingObject private[openstruct](val underlying: Any) ex
   }
 
   override def self: Any = (underlying, delegate)
+
+  override def toString = {
+    s"${underlying.toString} with a backing attribute map $delegate"
+  }
 }
