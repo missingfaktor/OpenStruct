@@ -4,7 +4,7 @@ import Keys._
 object Build extends Build {
 
   lazy val project = Project("root", file(".")).settings(
-    name := "ExpandoObject",
+    name := "OpenStruct",
 
     scalaVersion := "2.10.1",
 
