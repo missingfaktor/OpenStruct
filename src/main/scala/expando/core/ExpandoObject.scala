@@ -40,6 +40,8 @@ object ExpandoObject {
     new MapBuilder[String, Any, ExpandoObject](empty)
   }
 
+  def withUnderlyingObject(underlying: Any) = new ExpandoObjectPlus(underlying)
+
   implicit def canBuildFrom: CanBuildFrom[ExpandoObject, (String, Any), ExpandoObject] = {
     new CanBuildFrom[ExpandoObject, (String, Any), ExpandoObject] {
       def apply(from: ExpandoObject) = newBuilder
