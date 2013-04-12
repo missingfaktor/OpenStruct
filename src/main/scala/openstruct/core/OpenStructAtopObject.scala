@@ -2,7 +2,8 @@ package openstruct.core
 
 import openstruct.util.{FallbackChain, Reflect}
 
-class OpenStructAtopObject private[openstruct](val underlying: Any) extends OpenStruct with Proxy {
+trait OpenStructAtopObject extends OpenStruct with Proxy {
+  def underlying: Any
 
   def selectDynamic(key: String): Any = {
     val fun = FallbackChain.from[String, Any](
@@ -30,5 +31,12 @@ class OpenStructAtopObject private[openstruct](val underlying: Any) extends Open
 
   override def toString = {
     s"OpenStruct with underlying object $underlying and backing attribute map $delegate"
+  }
+}
+
+object OpenStructAtopObject {
+  private[openstruct]
+  def apply(_underlying: Any) = new OpenStructAtopObject {
+    def underlying: Any = _underlying
   }
 }

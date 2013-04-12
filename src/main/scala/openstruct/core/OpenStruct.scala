@@ -17,9 +17,9 @@ trait OpenStruct
 
 object OpenStruct {
 
-  def create = new IndependentOpenStruct
+  def create = IndependentOpenStruct.create
 
-  def atop(underlying: Any) = new OpenStructAtopObject(underlying)
+  def atop(underlying: Any) = OpenStructAtopObject(underlying)
 
   def apply(kvs: (String, Any)*) = kvs.foldLeft(create)(_ += _)
 

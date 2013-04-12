@@ -19,19 +19,19 @@ class OpenStructAtopObjectTest extends Specification {
     "when looked up for a key which corresponds to" in {
       "a public field, access it" in {
         val f = new Foo
-        val e = new OpenStructAtopObject(f)
+        val e = OpenStruct.atop(f)
         e.publicField mustEqual OpenStruct.atop('puf)
       }
 
       "a nullary public method, access it" in {
         val f = new Foo
-        val e = new OpenStructAtopObject(f)
+        val e = OpenStruct.atop(f)
         e.publicNullaryMethod mustEqual OpenStruct.atop('punm)
       }
 
       "a private field, ignore it and move ahead" in {
         val f = new Foo
-        val e = new OpenStructAtopObject(f)
+        val e = OpenStruct.atop(f)
         locally {
           e.privateField
         } must throwAn[Exception]
@@ -42,7 +42,7 @@ class OpenStructAtopObjectTest extends Specification {
 
       "a nullary private method, ignore it and move ahead" in {
         val f = new Foo
-        val e = new OpenStructAtopObject(f)
+        val e = OpenStruct.atop(f)
         locally {
           e.privateNullaryMethod
         } must throwAn[Exception]
@@ -53,14 +53,14 @@ class OpenStructAtopObjectTest extends Specification {
 
       "no field or method, but exists in the backing map, access it" in {
         val f = new Foo
-        val e = new OpenStructAtopObject(f)
+        val e = OpenStruct.atop(f)
         e.name = "foo"
         e.name mustEqual OpenStruct.atop("foo")
       }
 
       "no field or method, nor does it exist in the backing map, throw a NoSuchElementException" in {
         val f = new Foo
-        val e = new OpenStructAtopObject(f)
+        val e = OpenStruct.atop(f)
         locally {
           e.name
         } must throwA[NoSuchElementException]

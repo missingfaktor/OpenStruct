@@ -1,6 +1,6 @@
 package openstruct.core
 
-class IndependentOpenStruct private[openstruct]() extends OpenStruct {
+trait IndependentOpenStruct extends OpenStruct {
   def selectDynamic(key: String) = OpenStruct.atop(this(key))
 
   def updateDynamic(key: String)(value: Any) = {
@@ -14,4 +14,9 @@ class IndependentOpenStruct private[openstruct]() extends OpenStruct {
   }
 
   override def self: Any = delegate
+}
+
+object IndependentOpenStruct {
+  private[openstruct]
+  def create = new IndependentOpenStruct {}
 }
