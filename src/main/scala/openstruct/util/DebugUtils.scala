@@ -1,4 +1,4 @@
-package expando.util
+package openstruct.util
 
 object DebugUtils {
   implicit class Tapper[A](val underlying: A) extends AnyVal {

@@ -1,4 +1,4 @@
-package expando.util
+package openstruct.util
 
 import org.specs2.mutable.Specification
 
@@ -6,7 +6,6 @@ class FallbackChainTest extends Specification {
   def doublesEven(i: Int) = if (i % 2 == 0) 2 * i else sys error "Not even!"
   def tripplesEven(i: Int) = if (i % 2 == 0) 3 * i else sys error "Not even!"
   def tripplesOdd(i: Int) = if (i % 2 != 0) 3 * i else sys error "Not odd!"
-  def alwaysPasses(i: Int) = 0
   def alwaysFails(i: Int) = sys error "Bang!"
 
   "FallbackChain" should {

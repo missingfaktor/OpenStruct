@@ -1,10 +1,11 @@
-package expando.util
+package openstruct.util
 
 import org.specs2.mutable.Specification
 
 class ReflectTest extends Specification {
   // Wow, the test fails without this flag. Baffling! I hope the Scala reflection library becomes thread safe soon.
   sequential
+  fullStackTrace
 
   class Foo {
     val publicField = 'puf

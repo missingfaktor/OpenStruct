@@ -1,4 +1,4 @@
-package expando.util
+package openstruct.util
 
 import collection.mutable
 

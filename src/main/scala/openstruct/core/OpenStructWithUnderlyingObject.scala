@@ -1,15 +1,21 @@
-package expando.core
+package openstruct.core
 
-import expando.util.{FallbackChain, Reflect}
+import openstruct.util.{FallbackChain, Reflect}
 
-class ExpandoObjectPlus(val underlying: Any) extends ExpandoObject with Proxy {
-  override def selectDynamic(key: String): Any = {
+class OpenStructWithUnderlyingObject private[openstruct](val underlying: Any) extends OpenStruct with Proxy {
+
+  def selectDynamic(key: String): Any = {
     val fun = FallbackChain.from[String, Any](
       Reflect.on(underlying).getField(_),
       Reflect.on(underlying).invokeMethod(_),
-      super.selectDynamic(_)
+      this.apply(_)
     )
     fun(key)
+  }
+
+  def updateDynamic(key: String)(value: Any) = {
+    this(key) = value
+    this
   }
 
   def applyDynamic(name: String)(args: Any*): Any = try {
