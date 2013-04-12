@@ -1,3 +1,5 @@
+package expando.core
+
 import org.specs2.mutable.Specification
 
 class ExpandoObjectTest extends Specification {
@@ -18,7 +20,7 @@ class ExpandoObjectTest extends Specification {
     "throw a NoSuchElementException when the field being access is invalid" in {
       val e = new ExpandoObject
       locally {
-        e.bar 
+        e.bar
       } must throwA[NoSuchElementException]
     }
 

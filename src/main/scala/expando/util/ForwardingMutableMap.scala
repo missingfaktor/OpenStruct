@@ -1,3 +1,5 @@
+package expando.util
+
 import collection.mutable
 
 trait ForwardingMutableMap[K, V, +Self <: mutable.MapLike[K, V, Self] with mutable.Map[K, V]]

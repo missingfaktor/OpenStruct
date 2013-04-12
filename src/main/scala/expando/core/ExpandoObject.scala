@@ -1,7 +1,10 @@
+package expando.core
+
 import language.dynamics
 import collection.mutable
 import mutable.{Builder, MapBuilder}
 import collection.generic.CanBuildFrom
+import expando.util.ForwardingMutableMap
 
 class ExpandoObject
     extends ForwardingMutableMap[String, Any, ExpandoObject]
@@ -9,7 +12,7 @@ class ExpandoObject
     with Proxy {
 
   protected val delegate = mutable.Map.empty[String, Any]
-  override def _empty = new ExpandoObject
+  override def _empty = ExpandoObject.empty
 
   def selectDynamic(key: String): Any = this(key)
 
