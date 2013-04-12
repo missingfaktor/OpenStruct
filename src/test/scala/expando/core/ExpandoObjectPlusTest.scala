@@ -11,6 +11,7 @@ class ExpandoObjectPlusTest extends Specification {
     private val privateField = 'prf
     def publicNullaryMethod = 'punm
     private def privateNullaryMethod = 'prnm
+    def add(x: Int) = 2 + x
   }
 
   "ExpandoObjectPlus" should {
@@ -64,6 +65,38 @@ class ExpandoObjectPlusTest extends Specification {
           e.name
         } must throwA[NoSuchElementException]
       }
+    }
+
+    "propagate method calls down to underlying object" in {
+      val f = new Foo
+      val e = new ExpandoObjectPlus(f)
+      e.add(2) mustEqual 4
+    }
+
+    "throw an exception when the method being called is absent in the underlying object" in {
+      val f = new Foo
+      val e = new ExpandoObjectPlus(f)
+      locally {
+        e.invalidMethod('arg)
+      } must throwA[NoSuchElementException]
+    }
+
+    "support structural equality" in {
+      case class Bar(i: Int)
+      val f1, f2 = new ExpandoObjectPlus(Bar(11))
+      f1 mustEqual f2
+
+      f1.name = "foo"
+      f1 mustNotEqual f2
+    }
+
+    "support sensible hashCode implementation" in {
+      case class Bar(i: Int)
+      val f1, f2 = new ExpandoObjectPlus(Bar(11))
+      f1.## mustEqual f2.##
+
+      f1.name = "foo"
+      f1.## mustNotEqual f2.##
     }
   }
 }

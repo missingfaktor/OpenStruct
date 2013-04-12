@@ -26,7 +26,7 @@ class ExpandoObject
     s"ExpandoObject($repr)"
   }
 
-  override def self = delegate
+  override def self: Any = delegate
 }
 
 object ExpandoObject {

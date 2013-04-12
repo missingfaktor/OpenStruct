@@ -1,6 +1,5 @@
 package expando.util
-import util.control.Breaks._
-import DebugUtils.Tapper
+
 import util.control.{ControlThrowable, Breaks}
 
 object FallbackChain {
