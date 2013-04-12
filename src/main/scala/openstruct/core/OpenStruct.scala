@@ -13,11 +13,16 @@ trait OpenStruct
 
   protected val delegate = mutable.Map.empty[String, Any]
   override def _empty = OpenStruct.create
+
+  val wrapResultMode: WrapResultMode
+  def selectDynamic(key: String): wrapResultMode.Shape
+  def updateDynamic(key: String)(value: Any): this.type
+  def applyDynamic(name: String)(args: Any*): wrapResultMode.Shape
 }
 
 object OpenStruct {
 
-  def create = IndependentOpenStruct.create
+  def create = IndependentOpenStruct.create()
 
   def atop(underlying: Any) = OpenStructAtopObject(underlying)
 

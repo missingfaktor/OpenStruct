@@ -20,13 +20,13 @@ class OpenStructAtopObjectTest extends Specification {
       "a public field, access it" in {
         val f = new Foo
         val e = OpenStruct.atop(f)
-        e.publicField mustEqual OpenStruct.atop('puf)
+        e.publicField mustEqual 'puf
       }
 
       "a nullary public method, access it" in {
         val f = new Foo
         val e = OpenStruct.atop(f)
-        e.publicNullaryMethod mustEqual OpenStruct.atop('punm)
+        e.publicNullaryMethod mustEqual 'punm
       }
 
       "a private field, ignore it and move ahead" in {
@@ -37,7 +37,7 @@ class OpenStructAtopObjectTest extends Specification {
         } must throwAn[Exception]
 
         e.privateField = 'xyz
-        e.privateField mustEqual OpenStruct.atop('xyz)
+        e.privateField mustEqual 'xyz
       }
 
       "a nullary private method, ignore it and move ahead" in {
@@ -48,14 +48,14 @@ class OpenStructAtopObjectTest extends Specification {
         } must throwAn[Exception]
 
         e.privateNullaryMethod = 'xyz
-        e.privateNullaryMethod mustEqual OpenStruct.atop('xyz)
+        e.privateNullaryMethod mustEqual 'xyz
       }
 
       "no field or method, but exists in the backing map, access it" in {
         val f = new Foo
         val e = OpenStruct.atop(f)
         e.name = "foo"
-        e.name mustEqual OpenStruct.atop("foo")
+        e.name mustEqual "foo"
       }
 
       "no field or method, nor does it exist in the backing map, throw a NoSuchElementException" in {
@@ -70,7 +70,7 @@ class OpenStructAtopObjectTest extends Specification {
     "propagate method calls down to underlying object" in {
       val f = new Foo
       val e = OpenStruct.atop(f)
-      e.add(2) mustEqual OpenStruct.atop(4)
+      e.add(2) mustEqual 4
     }
 
     "throw an exception when the method being called is absent in the underlying object" in {

@@ -17,7 +17,7 @@ class IndependentOpenStructTest extends Specification {
     "retrieve inserted fields correctly" in {
       val e = OpenStruct.create
       e.name = "foo"
-      e.name mustEqual OpenStruct.atop("foo")
+      e.name mustEqual "foo"
     }
 
     "throw a NoSuchElementException when the field being access is invalid" in {
@@ -31,7 +31,7 @@ class IndependentOpenStructTest extends Specification {
       val e = OpenStruct.create
       e.name = "foo"
       e.name = 'bar
-      e.name mustEqual OpenStruct.atop('bar)
+      e.name mustEqual 'bar
     }
 
     "retain its type on standard Map operations" in {
