@@ -10,7 +10,7 @@ class ReflectTest extends Specification {
     val publicField = 'puf
     private val privateField = 'prf
     def publicNullaryMethod = 'punm
-    def privateNullaryMethod = 'prnm
+    private def privateNullaryMethod = 'prnm
   }
 
   "Reflect" should {

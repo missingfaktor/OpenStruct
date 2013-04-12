@@ -22,11 +22,21 @@ object Reflect {
     }
 
     def invokeMethod(name: String, args: Any*): Any = {
-      instanceMirror.reflectMethod(member(name).asMethod).apply(args: _*)
+      val methodSymbol = member(name).asMethod
+      if (methodSymbol.isPrivate) {
+        throw new UnsupportedOperationException(s"Method $name in class $klass is private.")
+      }
+      val method = instanceMirror.reflectMethod(methodSymbol)
+      method.apply(args: _*)
     }
 
     def getField(name: String): Any = {
-      instanceMirror.reflectField(member(name).asTerm).get
+      val fieldSymbol = member(name).asTerm
+      if (fieldSymbol.isPrivate) {
+        throw new UnsupportedOperationException(s"Field $name in class $klass is private.")
+      }
+      val field = instanceMirror.reflectField(fieldSymbol)
+      field.get
     }
   }
 }
