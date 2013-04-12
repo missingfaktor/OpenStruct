@@ -1,7 +1,7 @@
 package openstruct.core
 
 class IndependentOpenStruct private[openstruct]() extends OpenStruct {
-  def selectDynamic(key: String): Any = this(key)
+  def selectDynamic(key: String) = OpenStruct.atop(this(key))
 
   def updateDynamic(key: String)(value: Any) = {
     this(key) = value

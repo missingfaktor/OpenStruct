@@ -19,7 +19,7 @@ object OpenStruct {
 
   def create = new IndependentOpenStruct
 
-  def withUnderlyingObject(underlying: Any) = new OpenStructWithUnderlyingObject(underlying)
+  def atop(underlying: Any) = new OpenStructAtopObject(underlying)
 
   def apply(kvs: (String, Any)*) = kvs.foldLeft(create)(_ += _)
 

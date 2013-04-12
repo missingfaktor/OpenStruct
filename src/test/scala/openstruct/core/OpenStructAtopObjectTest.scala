@@ -2,7 +2,7 @@ package openstruct.core
 
 import org.specs2.mutable.Specification
 
-class OpenStructWithUnderlyingObjectTest extends Specification {
+class OpenStructAtopObjectTest extends Specification {
   sequential
   fullStackTrace
 
@@ -19,48 +19,48 @@ class OpenStructWithUnderlyingObjectTest extends Specification {
     "when looked up for a key which corresponds to" in {
       "a public field, access it" in {
         val f = new Foo
-        val e = new OpenStructWithUnderlyingObject(f)
-        e.publicField mustEqual 'puf
+        val e = new OpenStructAtopObject(f)
+        e.publicField mustEqual OpenStruct.atop('puf)
       }
 
       "a nullary public method, access it" in {
         val f = new Foo
-        val e = new OpenStructWithUnderlyingObject(f)
-        e.publicNullaryMethod mustEqual 'punm
+        val e = new OpenStructAtopObject(f)
+        e.publicNullaryMethod mustEqual OpenStruct.atop('punm)
       }
 
       "a private field, ignore it and move ahead" in {
         val f = new Foo
-        val e = new OpenStructWithUnderlyingObject(f)
+        val e = new OpenStructAtopObject(f)
         locally {
           e.privateField
         } must throwAn[Exception]
 
         e.privateField = 'xyz
-        e.privateField mustEqual 'xyz
+        e.privateField mustEqual OpenStruct.atop('xyz)
       }
 
       "a nullary private method, ignore it and move ahead" in {
         val f = new Foo
-        val e = new OpenStructWithUnderlyingObject(f)
+        val e = new OpenStructAtopObject(f)
         locally {
           e.privateNullaryMethod
         } must throwAn[Exception]
 
         e.privateNullaryMethod = 'xyz
-        e.privateNullaryMethod mustEqual 'xyz
+        e.privateNullaryMethod mustEqual OpenStruct.atop('xyz)
       }
 
       "no field or method, but exists in the backing map, access it" in {
         val f = new Foo
-        val e = new OpenStructWithUnderlyingObject(f)
+        val e = new OpenStructAtopObject(f)
         e.name = "foo"
-        e.name mustEqual "foo"
+        e.name mustEqual OpenStruct.atop("foo")
       }
 
       "no field or method, nor does it exist in the backing map, throw a NoSuchElementException" in {
         val f = new Foo
-        val e = new OpenStructWithUnderlyingObject(f)
+        val e = new OpenStructAtopObject(f)
         locally {
           e.name
         } must throwA[NoSuchElementException]
@@ -69,13 +69,13 @@ class OpenStructWithUnderlyingObjectTest extends Specification {
 
     "propagate method calls down to underlying object" in {
       val f = new Foo
-      val e = OpenStruct.withUnderlyingObject(f)
-      e.add(2) mustEqual 4
+      val e = OpenStruct.atop(f)
+      e.add(2) mustEqual OpenStruct.atop(4)
     }
 
     "throw an exception when the method being called is absent in the underlying object" in {
       val f = new Foo
-      val e = OpenStruct.withUnderlyingObject(f)
+      val e = OpenStruct.atop(f)
       locally {
         e.invalidMethod('arg)
       } must throwA[NoSuchElementException]
@@ -83,7 +83,7 @@ class OpenStructWithUnderlyingObjectTest extends Specification {
 
     "support structural equality" in {
       case class Bar(i: Int)
-      val f1, f2 = OpenStruct.withUnderlyingObject(Bar(11))
+      val f1, f2 = OpenStruct.atop(Bar(11))
       f1 mustEqual f2
 
       f1.name = "foo"
@@ -92,7 +92,7 @@ class OpenStructWithUnderlyingObjectTest extends Specification {
 
     "support sensible hashCode implementation" in {
       case class Bar(i: Int)
-      val f1, f2 = OpenStruct.withUnderlyingObject(Bar(11))
+      val f1, f2 = OpenStruct.atop(Bar(11))
       f1.## mustEqual f2.##
 
       f1.name = "foo"
