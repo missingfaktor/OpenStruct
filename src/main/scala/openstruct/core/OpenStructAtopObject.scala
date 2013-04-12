@@ -5,7 +5,7 @@ import openstruct.util.{FallbackChain, Reflect}
 trait OpenStructAtopObject extends OpenStruct with Proxy {
   def underlying: Any
 
-  def selectDynamic(key: String): Any = {
+  def selectDynamic(key: String) = {
     val fun = FallbackChain.from[String, Any](
       Reflect.on(underlying).getField(_),
       Reflect.on(underlying).invokeMethod(_),
